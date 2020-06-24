@@ -1,4 +1,4 @@
 module Guillotine
-    class StencilGroup
-    end
+  class StencilGroup
+  end
 end

@@ -1,4 +1,4 @@
 module Guillotine
-    class WordCollection
-    end
+  class WordCollection
+  end
 end

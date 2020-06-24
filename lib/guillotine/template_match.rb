@@ -1,4 +1,4 @@
 module Guillotine
-    class TemplateMatch
-    end
+  class TemplateMatch
+  end
 end

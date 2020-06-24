@@ -1,4 +1,4 @@
 module Guillotine
-    class BaseStencil
-    end
+  class BaseStencil
+  end
 end

@@ -1,4 +1,4 @@
 module Guillotine
-    class Template
-    end
+  class Template
+  end
 end

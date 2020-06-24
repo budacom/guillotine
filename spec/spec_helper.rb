@@ -1,6 +1,5 @@
 require 'rails'
-require 'active_admin_resource'
-require 'pry'
+require 'guillotine'
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|
