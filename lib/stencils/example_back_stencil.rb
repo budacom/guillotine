@@ -16,8 +16,12 @@ class ExampleBackStencil < BaseStencil
     @fields ||= Set[
       "names",
       "surnames",
-      "face"
+      "has_sensible_data?"
     ]
+  end
+
+  def has_sensible_data?
+    false
   end
 
   attr_reader :names, :surnames

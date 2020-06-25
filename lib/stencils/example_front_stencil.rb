@@ -16,8 +16,12 @@ class ExampleFrontStencil < BaseStencil
     @fields ||= Set[
       "number",
       "parsed_number",
-      "face"
+      "has_sensible_data?"
     ]
+  end
+
+  def has_sensible_data?
+    true
   end
 
   attr_reader :number, :parsed_number

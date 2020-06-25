@@ -2,10 +2,7 @@ class StencilGroup
   def self.match(_stencil_map, _document_words)
     stencils = {}
     _stencil_map.each do |face, stencil|
-      return nil if !_document_words.include? face
-
-      stencils[face] = stencil.match _document_words[face]
-      return nil if stencils[face].nil?
+      stencils[face] = _document_words.include?(face) ? stencil.match(_document_words[face]) : nil
     end
 
     new(stencils)
@@ -19,10 +16,18 @@ class StencilGroup
 
   def get_any?(_field)
     @stencils.values.each do |stencil|
-      raise "Unknown field #{_field}" if !stencil.fields.include? _field
+      raise "#{self.class.name} has no field #{_field}" if !stencil.fields.include? _field
     end
 
-    @stencils.values.any? &public_send(_field)
+    @stencils.values.any? { |stencil| stencil.public_send(_field) }
+  end
+
+  def get_all?(_field)
+    @stencils.values.each do |stencil|
+      raise "#{self.class.name} has no field #{_field}" if !stencil.fields.include? _field
+    end
+
+    @stencils.values.all? { |stencil| stencil.public_send(_field) }
   end
 
   def get_attribute(_field)
