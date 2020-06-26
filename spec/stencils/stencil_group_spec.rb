@@ -104,6 +104,10 @@ RSpec.describe StencilGroup do
         expect(stencil_group.get_attribute("number")).to eq "897.156.756"
         expect(stencil_group.get_attribute("parsed_number")).to eq 897156756
       end
+
+      it "fails when trying to read an attribute that is not listed on 'fields'" do
+        expect { stencil_group.get_attribute("birth_date") }.to raise_error(RuntimeError)
+      end
     end
 
     describe "#get_any?" do
