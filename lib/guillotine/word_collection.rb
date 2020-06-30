@@ -95,19 +95,20 @@ module Guillotine
       self
     end
 
-    def read(_upper_left_pt, _lower_right_pt, _line_height, _exclusion, _delete, min_confidence: 0)
+    def read(_upper_left_pt, _lower_right_pt, line_height: 2.0, exclusion: Set[], delete: false,
+      min_confidence: 0)
       read_words = select_inside_box(
         _upper_left_pt,
         _lower_right_pt,
         min_confidence,
-        _exclusion,
-        _delete
+        exclusion,
+        delete
       )
       confidence = read_words.map { |w| w[:conf] }.min || 1.0
 
       lines = []
       while !read_words.empty?
-        line_words, read_words = partition_by_line(read_words, _line_height)
+        line_words, read_words = partition_by_line(read_words, line_height)
 
         lines << line_words.sort_by { |w| w[:bounding_box][0][0] }.map { |w| w[:word] }.join(' ')
       end

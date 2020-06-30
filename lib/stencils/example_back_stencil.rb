@@ -27,7 +27,7 @@ class ExampleBackStencil < BaseStencil
   attr_reader :names, :surnames
 
   def process_match
-    @names = match.read([2.5, 4.4], [6.1, 6.2], 2.5, Set[]).to_s
-    @surnames = match.read([2.1, 13.1], [15.0, 15.0], 2.5, Set[]).to_s
+    @names = match.read([2.5, 4.4], [6.1, 6.2]).to_s
+    @surnames = match.read([2.1, 13.1], [15.0, 15.0]).to_s
   end
 end

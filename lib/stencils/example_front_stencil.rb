@@ -27,7 +27,7 @@ class ExampleFrontStencil < BaseStencil
   attr_reader :number, :parsed_number
 
   def process_match
-    @number = match.read([23.9, 15.0], [34.5, 16.9], 2.5, Set[]).to_s
+    @number = match.read([23.9, 15.0], [34.5, 16.9]).to_s
     @parsed_number = parse_number(@number)
   end
 

@@ -98,31 +98,31 @@ RSpec.describe Guillotine::Template do
       it "properly transforms the word collection" do
         match = front_template.match(front_words)
 
-        expect(match.read([23.9, 15.0], [34.5, 16.9], 2.5, Set[]).to_s).to eq "897.156.756"
+        expect(match.read([23.9, 15.0], [34.5, 16.9]).to_s).to eq "897.156.756"
       end
 
       it "properly ignores excluded words from the respective fields" do
         match = back_template.match(back_words)
         exclusions = back_template.get_exclusions(:surnames)
 
-        expect(match.read([2.1, 13.1], [15.0, 15.0], 2.5, Set[]).to_s).to eq "Smith Williams"
-        expect(match.read([2.1, 13.1], [15.0, 15.0], 2.5, exclusions).to_s)
+        expect(match.read([2.1, 13.1], [15.0, 15.0]).to_s).to eq "Smith Williams"
+        expect(match.read([2.1, 13.1], [15.0, 15.0], exclusion: exclusions).to_s)
           .to eq "Williams"
       end
 
       it "marks words as deleted when using 'delete'" do
         match = back_template.match(back_words)
 
-        expect { match.read([2.1, 13.1], [15.0, 15.0], 2.5, Set[], delete: true) }
+        expect { match.read([2.1, 13.1], [15.0, 15.0], delete: true) }
           .to change { match.words.deleted(5) }.to true
       end
 
       it "properly ignores deleted words when reading" do
         match = back_template.match(back_words)
 
-        expect(match.read([2.1, 13.1], [15.0, 15.0], 2.5, Set[], delete: true).to_s)
+        expect(match.read([2.1, 13.1], [15.0, 15.0], delete: true).to_s)
           .to eq "Smith Williams"
-        expect(match.read([2.1, 13.1], [15.0, 15.0], 2.5, Set[]).to_s).to eq ""
+        expect(match.read([2.1, 13.1], [15.0, 15.0]).to_s).to eq ""
       end
 
       it "allows accessing labeled points" do
@@ -135,22 +135,22 @@ RSpec.describe Guillotine::Template do
       it "allows reading words relative to a label using match.read_relative" do
         match = back_template.match(back_words)
 
-        expect(match.read_relative(:names, [1, 3], [5, 6], 2.0, Set[]).to_s).to eq "John"
+        expect(match.read_relative(:names, [1, 3], [5, 6]).to_s).to eq "John"
       end
 
       it "marks words as deleted when using 'delete' on read_relative" do
         match = back_template.match(back_words)
 
-        expect { match.read_relative(:names, [1, 3], [5, 6], 2.0, Set[], delete: true) }
+        expect { match.read_relative(:names, [1, 3], [5, 6], delete: true) }
           .to change { match.words.deleted(2) }.to true
       end
 
       it "properly ignores deleted words when reading realative" do
         match = back_template.match(back_words)
 
-        expect(match.read_relative(:names, [1, 3], [5, 6], 2.0, Set[], delete: true).to_s)
+        expect(match.read_relative(:names, [1, 3], [5, 6], delete: true).to_s)
           .to eq "John"
-        expect(match.read_relative(:names, [1, 3], [5, 6], 2.0, Set[], delete: true).to_s)
+        expect(match.read_relative(:names, [1, 3], [5, 6], delete: true).to_s)
           .to eq ""
       end
 

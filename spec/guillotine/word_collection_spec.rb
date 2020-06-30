@@ -130,47 +130,47 @@ RSpec.describe Guillotine::WordCollection do
 
     describe "#read" do
       it "returns the words that have a vertex inside the given bounding box" do
-        expect(collection.read([0.0, 0.0], [1.0, 3.0], 1.0, Set[], false).to_s).to eq 'FOO'
-        expect(collection.read([3.0, 3.5], [4.0, 4.0], 1.0, Set[], false).to_s).to eq 'BAR'
+        expect(collection.read([0.0, 0.0], [1.0, 3.0]).to_s).to eq 'FOO'
+        expect(collection.read([3.0, 3.5], [4.0, 4.0]).to_s).to eq 'BAR'
       end
 
       it "returns the words that have an edge colliding with the bounding box" do
-        expect(collection.read([2.5, 5.2], [4.0, 6.0], 1.0, Set[], false).to_s).to eq 'Bár'
-        expect(collection.read([3.5, 4.5], [4.5, 5.5], 1.0, Set[], false).to_s).to eq 'Bár'
+        expect(collection.read([2.5, 5.2], [4.0, 6.0]).to_s).to eq 'Bár'
+        expect(collection.read([3.5, 4.5], [4.5, 5.5]).to_s).to eq 'Bár'
       end
 
       it "reads from top to bottom, left to right, considering the max line height" do
-        expect(collection.read([0.0, 0.0], [6.0, 6.0], 0.5, Set[], false).to_s)
+        expect(collection.read([0.0, 0.0], [6.0, 6.0], line_height: 0.5).to_s)
           .to eq "FOO BAR\nQux\nBár"
-        expect(collection.read([0.0, 0.0], [6.0, 6.0], 1.0, Set[], false).to_s)
+        expect(collection.read([0.0, 0.0], [6.0, 6.0], line_height: 1.0).to_s)
           .to eq "FOO Qux BAR\nBár"
       end
 
       it "returns the confidence level for the read words" do
-        expect(collection.read([0.0, 0.0], [1.0, 3.0], 1.0, Set[], false).confidence).to eq 1.0
-        expect(collection.read([0.0, 0.0], [1.1, 6.0], 0.5, Set[], false).confidence).to eq 0.6
+        expect(collection.read([0.0, 0.0], [1.0, 3.0], line_height: 1.0).confidence).to eq 1.0
+        expect(collection.read([0.0, 0.0], [1.1, 6.0], line_height: 0.5).confidence).to eq 0.6
       end
 
       it "allows filtering words by a minimum confidence" do
-        expect(collection.read([0.0, 0.0], [3.0, 6.0], 0.5, Set[], false, min_confidence: 0.9).to_s)
+        expect(collection.read([0.0, 0.0], [3.0, 6.0], min_confidence: 0.9).to_s)
           .to eq 'FOO'
       end
 
       context "when delete is true" do
         it "returns the words found as usual" do
-          expect(collection.read([0.0, 0.0], [1.0, 3.0], 1.0, Set[], true).to_s).to eq 'FOO'
+          expect(collection.read([0.0, 0.0], [1.0, 3.0], delete: true).to_s).to eq 'FOO'
         end
 
         it "marks selected words as deleted for future reads" do
           col = collection
-          expect { col.read([0.0, 0.0], [1.0, 3.0], 1.0, Set[], true) }
+          expect { col.read([0.0, 0.0], [1.0, 3.0], delete: true) }
             .to change { col.words[0][:deleted] }.to true
         end
 
         it "ignores the words marked as deleted" do
           col = collection
-          col.read([0.0, 0.0], [1.0, 3.0], 1.0, Set[], true)
-          expect(col.read([0.0, 0.0], [1.0, 3.0], 1.0, Set[], false).to_s).to eq ""
+          col.read([0.0, 0.0], [1.0, 3.0], delete: true)
+          expect(col.read([0.0, 0.0], [1.0, 3.0]).to_s).to eq ""
         end
       end
     end
