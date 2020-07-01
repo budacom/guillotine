@@ -29,4 +29,8 @@ RSpec.describe ExampleBackStencil do
   it "returns the stencils face" do
     expect(stencil_match.face).to eq :back
   end
+
+  it "uses the overriten default_max_error for match" do
+    expect(described_class.default_max_error).to eq 10
+  end
 end

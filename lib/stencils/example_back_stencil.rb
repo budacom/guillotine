@@ -8,6 +8,10 @@ class ExampleBackStencil < BaseStencil
     end
   end
 
+  def self.default_max_error
+    10
+  end
+
   def face
     :back
   end

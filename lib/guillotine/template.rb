@@ -149,6 +149,8 @@ module Guillotine
         @fixtures[_result.third[1]][1] + [1]
       ]
 
+      raise "Found locations are collinear" if matrix_w.singular?
+
       transform = (matrix_w.inverse * matrix_f).transpose
 
       # transform collection

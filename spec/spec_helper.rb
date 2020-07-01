@@ -5,11 +5,11 @@ formatters = [SimpleCov::Formatter::HTMLFormatter, Coveralls::SimpleCov::Formatt
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter::new(formatters)
 
 SimpleCov.start do
-  add_filter { |src| !(src.filename =~ /lib/) }
+  add_filter { |src| (src.filename !~ /lib/) }
   add_filter "spec.rb"
 end
 
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+$LOAD_PATH.unshift File.expand_path("../lib", __dir__)
 require "guillotine"
 require "pry"
 

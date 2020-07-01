@@ -243,6 +243,37 @@ RSpec.describe Guillotine::Template do
     end
   end
 
+  context "when fixture words have more than one option on the word collection" do
+    let(:back_template) do
+      described_class.build do |t|
+        t.set 'NAMES', at: [1.3, 0.9]
+        t.set 'DOCUMENT', at: [25.4, 0.8]
+        t.set 'SURNAMES', at: [1.6, 8.0]
+        t.set 'ID', at: [28.9, 8.1]
+      end
+    end
+
+    let(:back_words) do
+      Guillotine::WordCollection.new.tap do |w|
+        w.push_word('names', bounding_box: [[323, 27], [318, 112], [294, 110], [299, 26]])
+        w.push_word('document', bounding_box: [[512, 120], [500, 200], [480, 200], [490, 120]])
+        w.push_word('document', bounding_box: [[304, 377], [293, 501], [260, 499], [271, 374]])
+        w.push_word('John', bounding_box: [[270, 43], [267, 93], [234, 91], [237, 41]])
+        w.push_word('surnames', bounding_box: [[209, 33], [199, 154], [166, 151], [176, 30]])
+        w.push_word('ID', bounding_box: [[421, 178], [439, 178], [439, 145], [421, 145]])
+        w.push_word('ID', bounding_box: [[178, 421], [178, 439], [145, 439], [145, 421]])
+        w.push_word('Smith', bounding_box: [[126, 37], [120, 102], [86, 99], [92, 34]])
+        w.push_word('Williams', bounding_box: [[120, 112], [111, 219], [77, 216], [86, 109]])
+      end
+    end
+
+    describe "#match" do
+      it "chooses a low error convination" do
+        expect(back_template.match(back_words).error).to be < 5
+      end
+    end
+  end
+
   context "when not all fixtures are present in word collection" do
     let(:template) do
       described_class.build do |t|
