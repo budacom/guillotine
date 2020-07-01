@@ -81,8 +81,8 @@ RSpec.describe Guillotine::WordCollection do
 
     describe "#deleted" do
       it "returns the bool 'deleted' of the word at given index" do
-        expect(collection.deleted(0)).to eq false
-        expect(collection.deleted(3)).to eq false
+        expect(collection.deleted(0)).to be collection.words[0][:deleted]
+        expect(collection.deleted(3)).to be collection.words[3][:deleted]
       end
     end
 

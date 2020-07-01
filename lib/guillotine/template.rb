@@ -10,7 +10,7 @@ module Guillotine
       template
     end
 
-    attr_reader :sealed, :fixtures
+    attr_reader :sealed, :fixtures, :exclusions
 
     def initialize
       @sealed = false

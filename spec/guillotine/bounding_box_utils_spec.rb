@@ -20,12 +20,12 @@ RSpec.describe Guillotine::BoundingBoxUtils do
   end
 
   describe "#vertex_in_aabb?" do
-    let(:inside) do
-      vertexes.map { |vertex| utils.vertex_in_aabb?(aabb, vertex) }
+    let(:vertices_in_aabb?) do
+      vertices.map { |vertex| utils.vertex_in_aabb?(aabb, vertex) }
     end
 
     context "when the vertex is inside the box" do
-      let(:vertexes) do
+      let(:vertices) do
         [
           [3, 3],
           [2.001, 2],
@@ -34,13 +34,13 @@ RSpec.describe Guillotine::BoundingBoxUtils do
         ]
       end
 
-      it "returns true" do
-        expect(inside).to eq [true, true, true, true]
+      it "returns true for all vertices" do
+        expect(vertices_in_aabb?).to eq [true, true, true, true]
       end
     end
 
     context "when the vertex is inside an edge" do
-      let(:vertexes) do
+      let(:vertices) do
         [
           [2, 4],
           [4, 2],
@@ -49,13 +49,13 @@ RSpec.describe Guillotine::BoundingBoxUtils do
         ]
       end
 
-      it "returns true" do
-        expect(inside).to eq [true, true, true, true]
+      it "returns truefor all vertices" do
+        expect(vertices_in_aabb?).to eq [true, true, true, true]
       end
     end
 
     context "when the vertex is inside a box vertex" do
-      let(:vertexes) do
+      let(:vertices) do
         [
           [2, 2],
           [2, 5],
@@ -64,13 +64,13 @@ RSpec.describe Guillotine::BoundingBoxUtils do
         ]
       end
 
-      it "returns true" do
-        expect(inside).to eq [true, true, true, true]
+      it "returns true for all vertices" do
+        expect(vertices_in_aabb?).to eq [true, true, true, true]
       end
     end
 
     context "when the vertex is outside the box" do
-      let(:vertexes) do
+      let(:vertices) do
         [
           [0, 0],
           [0, 4],
@@ -83,20 +83,20 @@ RSpec.describe Guillotine::BoundingBoxUtils do
         ]
       end
 
-      it "returns true" do
-        expect(inside).to eq [false, false, false, false, false, false, false, false]
+      it "returns true for all vertices" do
+        expect(vertices_in_aabb?).to eq [false, false, false, false, false, false, false, false]
       end
     end
   end
 
   describe "#edges_touch?" do
-    let(:any_touch) do
+    let(:number_of_edges_that_touch) do
       edges.map do |edge|
         aabb_edges.select { |aabb_edge| utils.edges_touch?(edge, aabb_edge) }.count
       end
     end
 
-    let(:inverted_any_touch) do
+    let(:number_of_edges_that_touch_inverted) do
       edges.map do |edge|
         aabb_edges.select { |aabb_edge| utils.edges_touch?(aabb_edge, edge) }.count
       end
@@ -128,17 +128,17 @@ RSpec.describe Guillotine::BoundingBoxUtils do
       ]
     end
 
-    it "return true for edges touching and false otherwise" do
-      expect(any_touch).to eq [1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4]
+    it "return the expected number of edges touching" do
+      expect(number_of_edges_that_touch).to eq [1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 4, 4]
     end
 
-    it "works simetric" do
-      expect(any_touch).to eq inverted_any_touch
+    it "is commutative" do
+      expect(number_of_edges_that_touch).to eq number_of_edges_that_touch_inverted
     end
   end
 
   describe "#collides?" do
-    let(:collide) do
+    let(:collides?) do
       utils.collides?(aabb, box)
     end
 
@@ -153,7 +153,7 @@ RSpec.describe Guillotine::BoundingBoxUtils do
       end
 
       it "retruns true" do
-        expect(collide).to eq true
+        expect(collides?).to eq true
       end
     end
 
@@ -168,11 +168,11 @@ RSpec.describe Guillotine::BoundingBoxUtils do
       end
 
       it "retruns true" do
-        expect(collide).to eq true
+        expect(collides?).to eq true
       end
     end
 
-    context "when all word vertexes are inside the bounding box" do
+    context "when all vertexes are inside the bounding box" do
       let(:box) do
         [
           [1, 1],
@@ -183,11 +183,11 @@ RSpec.describe Guillotine::BoundingBoxUtils do
       end
 
       it "retruns false" do
-        expect(collide).to eq false
+        expect(collides?).to eq false
       end
     end
 
-    context "when the tho boxes don't collide" do
+    context "when the two boxes don't collide" do
       let(:box) do
         [
           [4, 7],
@@ -198,7 +198,7 @@ RSpec.describe Guillotine::BoundingBoxUtils do
       end
 
       it "retruns true" do
-        expect(collide).to eq false
+        expect(collides?).to eq false
       end
     end
   end
