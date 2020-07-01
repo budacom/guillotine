@@ -8,11 +8,26 @@ RSpec.describe Guillotine::Template do
       it "registers a new pinned word in the template" do
         expect { template.set 'REPÚBLICA', at: [21.6, 8.0] }.not_to raise_error
       end
+
+      it "stores a fixture on the template" do
+        expect { template.set 'REPÚBLICA', at: [21.6, 8.0] }.to change { template.fixtures }
+          .to [['REPÚBLICA', [21.6, 8.0], nil, nil]]
+      end
     end
 
     describe "#set_exclusion" do
       it "registers a new exclusion for a given field" do
         expect { template.set_exclusion :surnames, 'APELLIDOS' }.not_to raise_error
+      end
+
+      it "stores a exclusion on the template" do
+        expect { template.set_exclusion :surnames, 'APELLIDOS' }
+          .to change { template.get_exclusions(:surnames) }.to Set['APELLIDOS']
+      end
+
+      it "stores the transliterated word on the template" do
+        expect { template.set_exclusion :surnames, 'República' }
+          .to change { template.get_exclusions(:surnames) }.to Set['REPUBLICA']
       end
     end
 
@@ -90,74 +105,59 @@ RSpec.describe Guillotine::Template do
     end
 
     describe "#match" do
+      let(:front_match) { front_template.match(front_words) }
+      let(:back_match) { back_template.match(back_words) }
+      let(:surname_back_exclusions) { back_template.get_exclusions(:surnames) }
+
       it "properly calculates the match error" do
-        expect(front_template.match(front_words).error).to be < 5
-        expect(back_template.match(back_words).error).to be < 5
+        expect(front_match.error).to be < 5
+        expect(back_match.error).to be < 5
       end
 
       it "properly transforms the word collection" do
-        match = front_template.match(front_words)
-
-        expect(match.read([23.9, 15.0], [34.5, 16.9], 2.5, Set[]).to_s).to eq "897.156.756"
+        expect(front_match.read([23.9, 15.0], [34.5, 16.9], 2.5, Set[]).to_s).to eq "897.156.756"
       end
 
       it "properly ignores excluded words from the respective fields" do
-        match = back_template.match(back_words)
-        exclusions = back_template.get_exclusions(:surnames)
-
-        expect(match.read([2.1, 13.1], [15.0, 15.0], 2.5, Set[]).to_s).to eq "Smith Williams"
-        expect(match.read([2.1, 13.1], [15.0, 15.0], 2.5, exclusions).to_s)
+        expect(back_match.read([2.1, 13.1], [15.0, 15.0], 2.5, Set[]).to_s).to eq "Smith Williams"
+        expect(back_match.read([2.1, 13.1], [15.0, 15.0], 2.5, surname_back_exclusions).to_s)
           .to eq "Williams"
       end
 
       it "marks words as deleted when using 'delete'" do
-        match = back_template.match(back_words)
-
-        expect { match.read([2.1, 13.1], [15.0, 15.0], 2.5, Set[], delete: true) }
-          .to change { match.words.deleted(5) }.to true
+        expect { back_match.read([2.1, 13.1], [15.0, 15.0], 2.5, Set[], delete: true) }
+          .to change { back_match.words.deleted(5) }.to true
       end
 
       it "properly ignores deleted words when reading" do
-        match = back_template.match(back_words)
-
-        expect(match.read([2.1, 13.1], [15.0, 15.0], 2.5, Set[], delete: true).to_s)
+        expect(back_match.read([2.1, 13.1], [15.0, 15.0], 2.5, Set[], delete: true).to_s)
           .to eq "Smith Williams"
-        expect(match.read([2.1, 13.1], [15.0, 15.0], 2.5, Set[]).to_s).to eq ""
+        expect(back_match.read([2.1, 13.1], [15.0, 15.0], 2.5, Set[]).to_s).to eq ""
       end
 
       it "allows accessing labeled points" do
-        match = back_template.match(back_words)
-
-        expect(match[:names]).to be_instance_of(Array)
-        expect(match[:surnames]).to be_instance_of(Array)
+        expect(back_match[:names]).to be_instance_of(Array)
+        expect(back_match[:surnames]).to be_instance_of(Array)
       end
 
       it "allows reading words relative to a label using match.read_relative" do
-        match = back_template.match(back_words)
-
-        expect(match.read_relative(:names, [1, 3], [5, 6], 2.0, Set[]).to_s).to eq "John"
+        expect(back_match.read_relative(:names, [1, 3], [5, 6], 2.0, Set[]).to_s).to eq "John"
       end
 
       it "marks words as deleted when using 'delete' on read_relative" do
-        match = back_template.match(back_words)
-
-        expect { match.read_relative(:names, [1, 3], [5, 6], 2.0, Set[], delete: true) }
-          .to change { match.words.deleted(2) }.to true
+        expect { back_match.read_relative(:names, [1, 3], [5, 6], 2.0, Set[], delete: true) }
+          .to change { back_match.words.deleted(2) }.to true
       end
 
       it "properly ignores deleted words when reading realative" do
-        match = back_template.match(back_words)
-
-        expect(match.read_relative(:names, [1, 3], [5, 6], 2.0, Set[], delete: true).to_s)
+        expect(back_match.read_relative(:names, [1, 3], [5, 6], 2.0, Set[], delete: true).to_s)
           .to eq "John"
-        expect(match.read_relative(:names, [1, 3], [5, 6], 2.0, Set[], delete: true).to_s)
+        expect(back_match.read_relative(:names, [1, 3], [5, 6], 2.0, Set[], delete: true).to_s)
           .to eq ""
       end
 
       it "filters duplicate words with same bounding box" do
-        match = front_template.match front_words
-
-        expect(match.words.words.select { |word| word[:tl_word] == "NUMBER" }.count).to eq 1
+        expect(front_match.words.words.select { |word| word[:tl_word] == "NUMBER" }.count).to eq 1
       end
     end
   end
@@ -192,17 +192,15 @@ RSpec.describe Guillotine::Template do
       end
     end
 
-    it "filters all smalles copies of a word with keyword 'big'" do
-      match = template.match words
+    let(:match) { template.match words }
 
+    it "filters all smalles copies of a word with keyword 'big'" do
       expect(match.words.words.select { |word| word[:tl_word] == "ID" }.count).to eq 1
       expect(match.words.words.select { |word| word[:tl_word] == "ID" }[0][:original_bounding_box])
         .to eq [[178, 421], [178, 439], [145, 439], [145, 421]]
     end
 
     it "filters all low confidence copies of a word with keywords 'confidence'" do
-      match = template.match words
-
       expect(match.words.words.select { |word| word[:tl_word] == "DOCUMENT" }.count).to eq 1
       expect(match.words.words.select do |word|
         word[:tl_word] == "DOCUMENT"

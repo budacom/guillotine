@@ -93,7 +93,7 @@ RSpec.describe StencilGroup do
       end
     end
 
-    describe "#get" do
+    describe "#get_attribute" do
       let(:word_collections) do
         {
           front: example_front_words
@@ -212,7 +212,7 @@ RSpec.describe StencilGroup do
       end
     end
 
-    describe "#get" do
+    describe "#get_attribute" do
       let(:word_collections) do
         {
           front: example_front_words,
