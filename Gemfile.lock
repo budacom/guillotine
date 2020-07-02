@@ -90,12 +90,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  activesupport
+  activesupport (~> 4.2)
   bundler (~> 1.12)
-  coveralls
+  coveralls (~> 0.8)
   guard-rspec (~> 4.7)
   guillotine!
-  pry
+  pry (~> 0.13)
   rake (~> 10.0)
   rspec (~> 3.4)
 
