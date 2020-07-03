@@ -8,5 +8,6 @@ jobs:
     - uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.4
+    - run: sudo apt-get install libcurl3-dev
     - run: bundle install
     - run: bundle exec rspec spec/
