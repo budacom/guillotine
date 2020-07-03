@@ -1,5 +1,6 @@
 require 'simplecov'
 require 'coveralls'
+require 'webmock/rspec'
 
 formatters = [SimpleCov::Formatter::HTMLFormatter, Coveralls::SimpleCov::Formatter]
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter::new(formatters)

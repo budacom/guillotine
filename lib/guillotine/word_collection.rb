@@ -16,6 +16,15 @@ module Guillotine
       end
     end
 
+    def self.build_from_url(_url, _google_vision_api_key)
+      word_layout = VisionUtils.get_word_layout(_url, _google_vision_api_key)
+      new.tap do |collection|
+        word_layout.each do |wtext, bounding_box, confidence|
+          collection.push_word(wtext, bounding_box: bounding_box, confidence: confidence)
+        end
+      end
+    end
+
     attr_reader :words
 
     def initialize(words = [])

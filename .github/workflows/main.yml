@@ -1,0 +1,13 @@
+name: Setup ruby and run specs
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.4
+    - run: sudo apt-get install libcurl3-dev
+    - run: bundle install
+    - run: bundle exec rspec spec/
