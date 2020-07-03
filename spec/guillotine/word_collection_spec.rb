@@ -3,6 +3,29 @@ require "spec_helper"
 RSpec.describe Guillotine::WordCollection do
   let(:collection) { described_class.new }
 
+  describe '#build_from_url' do
+    before do
+      allow(VisionUtils)
+        .to receive(:get_word_layout)
+        .with('example_url.com', 'example_key')
+        .and_return([
+                      ['FOO', [[1, 2], [2, 2], [2, 4], [1, 4]], 0.5],
+                      ['BAR', [[3, 5], [4, 5], [4, 8], [3, 8]], 0.9]
+                    ])
+    end
+
+    let(:collection_from_api) { described_class.build_from_url('example_url.com', 'example_key') }
+
+    it "returns a word collection instance" do
+      expect(collection_from_api).to be_an_instance_of(described_class)
+    end
+
+    it "contains the words read from the api" do
+      expect(collection_from_api.word(0)).to eq 'FOO'
+      expect(collection_from_api.word(1)).to eq 'BAR'
+    end
+  end
+
   describe "#push_word" do
     let(:box) { [[1.0, 2.0], [4.0, 2.0], [4.0, 3.0], [1.0, 3.0]] }
 
