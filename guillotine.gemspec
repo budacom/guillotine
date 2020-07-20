@@ -28,5 +28,5 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency "faraday_middleware", "~> 0.14"
   spec.add_runtime_dependency "google-cloud-vision", "~> 1.0"
   spec.add_runtime_dependency "patron", "~> 0.6"
-  spec.add_runtime_dependency "rake", "~> 10.0"
+  spec.add_runtime_dependency "rake", ">= 10", "< 14"
 end
