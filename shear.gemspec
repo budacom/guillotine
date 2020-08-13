@@ -1,14 +1,14 @@
 lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require "guillotine/version"
+require "shear/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "guillotine"
-  spec.version       = Guillotine::VERSION
+  spec.name          = "shear"
+  spec.version       = Shear::VERSION
   spec.authors       = ["Buda.com", "Antonio López"]
   spec.email         = ["devs@buda.com", "antonio@buda.com"]
-  spec.homepage      = "https://github.com/budacom/guillotine"
-  spec.summary       = "Guillotine for structured documents"
+  spec.homepage      = "https://github.com/budacom/shear"
+  spec.summary       = "Tool for getting text from document images"
   spec.description   = "A tool used to extract data from a given structured document image"
   spec.license       = "MIT"
 

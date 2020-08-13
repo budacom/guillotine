@@ -1,4 +1,4 @@
-module Guillotine
+module Shear
   class TemplateMatch
     attr_reader :labels, :words, :error, :transform
 

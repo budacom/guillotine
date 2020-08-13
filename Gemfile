@@ -1,4 +1,4 @@
 source 'https://rubygems.org'
 
-# Specify your gem's dependencies in guillotine.gemspec
+# Specify your gem's dependencies in shear.gemspec
 gemspec

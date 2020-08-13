@@ -1,6 +1,6 @@
 class ExampleFrontStencil < BaseStencil
   def self.template
-    @template ||= Guillotine::Template.build do |t|
+    @template ||= Shear::Template.build do |t|
       t.set 'DOCUMENT', at: [0.9, 0.3]
       t.set 'ID', at: [30.8, 1.2]
       t.set 'COUNTRY', at: [1.1, 8.1]

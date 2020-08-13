@@ -1,17 +1,17 @@
-# guillotine
+# Shear
 
 A tool used to extract data from a given structured document image
 
 ## Installation
 
 ```bash
-$ gem install guillotine
+$ gem install shear
 ```
 
 Or add to your Gemfile:
 
 ```ruby
-gem "guillotine"
+gem "shear"
 ```
 
 ```bash
@@ -20,19 +20,13 @@ bundle install
 
 ## Usage
 
-TODO
+You can check the [wiki](https://github.com/budacom/shear/wiki) to learn how to use Shear.
+
+## Demo
+
+Check the [official shear-demo](https://shear-demo.herokuapp.com/) for a live example of shear. Also check the demo's code on the [shear-demo repository](https://github.com/budacom/shear-demo).
 
 ## Testing
-
-To run the specs you need to execute, **in the root path of the gem**, the following command:
-
-```bash
-bundle exec guard
-```
-
-You need to put **all your tests** in the `/guillotine/spec/` directory.
-
-## Contributing
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
@@ -42,8 +36,10 @@ You need to put **all your tests** in the `/guillotine/spec/` directory.
 
 ## Credits
 
-TODO
+This gem was created by [Antonio López](https://github.com/alopez7) and [Buda.com SpA](https://www.buda.com/).
+
+Shear is maintained by [Buda.com SpA](https://www.buda.com/).
 
 ## License
 
-TODO
+Shear is a free software and may be redistributed under the terms specified in the LICENSE file.
