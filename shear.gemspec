@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry", "~> 0.13"
   spec.add_development_dependency "rspec", "~> 3.4"
   spec.add_development_dependency "webmock", "~> 3.8"
-  spec.add_runtime_dependency "activesupport", "~> 4.2"
+  spec.add_runtime_dependency "activesupport", ">= 4.2"
   spec.add_runtime_dependency "faraday", "~> 0.17"
   spec.add_runtime_dependency "faraday_middleware", "~> 0.14"
   spec.add_runtime_dependency "google-cloud-vision", "~> 1.0"
