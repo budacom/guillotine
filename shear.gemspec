@@ -11,6 +11,11 @@ Gem::Specification.new do |spec|
   spec.summary       = "Tool for getting text from document images"
   spec.description   = "A tool used to extract data from a given structured document image"
   spec.license       = "MIT"
+  spec.metadata = {
+    "documentation_uri" => "https://github.com/budacom/shear/wiki",
+    "source_code_uri" => "https://github.com/budacom/shear",
+    "demo_uri" => "https://shear-demo.herokuapp.com/"
+  }
 
   spec.files = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
   spec.bindir = "exe"
