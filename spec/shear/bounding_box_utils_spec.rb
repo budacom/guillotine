@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Guillotine::BoundingBoxUtils do
+RSpec.describe Shear::BoundingBoxUtils do
   let(:utils) { described_class }
 
   let(:aabb) do

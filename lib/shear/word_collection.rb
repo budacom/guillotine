@@ -1,7 +1,7 @@
 require 'matrix'
 require 'active_support'
 
-module Guillotine
+module Shear
   class WordCollection
     class ReadString
       attr_reader :string, :confidence

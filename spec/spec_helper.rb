@@ -11,7 +11,7 @@ SimpleCov.start do
 end
 
 $LOAD_PATH.unshift File.expand_path("../lib", __dir__)
-require "guillotine"
+require "shear"
 require "pry"
 
 path = [File.dirname(__FILE__), "support", "**", "*.rb"]

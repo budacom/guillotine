@@ -1,4 +1,4 @@
-module Guillotine
+module Shear
   module BoundingBoxUtils
     extend self
 

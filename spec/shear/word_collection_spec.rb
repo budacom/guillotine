@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Guillotine::WordCollection do
+RSpec.describe Shear::WordCollection do
   let(:collection) { described_class.new }
 
   describe '#build_from_url' do

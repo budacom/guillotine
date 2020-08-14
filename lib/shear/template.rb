@@ -1,7 +1,7 @@
 require 'active_support'
 require 'active_support/core_ext'
 
-module Guillotine
+module Shear
   class Template
     def self.build(&_block)
       template = new

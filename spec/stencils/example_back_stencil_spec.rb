@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe ExampleBackStencil do
   let(:read_words) do
-    Guillotine::WordCollection.new.tap do |w|
+    Shear::WordCollection.new.tap do |w|
       w.push_word('names', bounding_box: [[323, 27], [318, 112], [294, 110], [299, 26]])
       w.push_word('document', bounding_box: [[304, 377], [293, 501], [260, 499], [271, 374]])
       w.push_word('John', bounding_box: [[270, 43], [267, 93], [234, 91], [237, 41]])

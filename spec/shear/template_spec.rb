@@ -1,6 +1,6 @@
 require "spec_helper"
 
-RSpec.describe Guillotine::Template do
+RSpec.describe Shear::Template do
   context "when the stencils has not been sealed" do
     let(:template) { described_class.new }
 
@@ -61,7 +61,7 @@ RSpec.describe Guillotine::Template do
     end
 
     let(:back_words) do
-      Guillotine::WordCollection.new.tap do |w|
+      Shear::WordCollection.new.tap do |w|
         w.push_word('names', bounding_box: [[323, 27], [318, 112], [294, 110], [299, 26]])
         w.push_word('document', bounding_box: [[304, 377], [293, 501], [260, 499], [271, 374]])
         w.push_word('John', bounding_box: [[270, 43], [267, 93], [234, 91], [237, 41]])
@@ -73,7 +73,7 @@ RSpec.describe Guillotine::Template do
     end
 
     let(:front_words) do
-      Guillotine::WordCollection.new.tap do |w|
+      Shear::WordCollection.new.tap do |w|
         w.push_word('Document', bounding_box: [[210, 27], [401, 114], [385, 150], [193, 63]])
         w.push_word('country', bounding_box: [[169, 122], [248, 159], [234, 189], [155, 152]])
         w.push_word('number', bounding_box: [[120, 211], [205, 246], [194, 272], [109, 237]])
@@ -84,7 +84,7 @@ RSpec.describe Guillotine::Template do
     end
 
     let(:blury_front_words) do
-      Guillotine::WordCollection.new.tap do |w|
+      Shear::WordCollection.new.tap do |w|
         w.push_word('country', bounding_box: [[169, 122], [248, 159], [234, 189], [155, 152]])
         w.push_word('number', bounding_box: [[120, 211], [205, 246], [194, 272], [109, 237]])
         w.push_word('ID', bounding_box: [[588, 208], [603, 214], [594, 236], [579, 230]])
@@ -174,7 +174,7 @@ RSpec.describe Guillotine::Template do
     end
 
     let(:words) do
-      Guillotine::WordCollection.new.tap do |w|
+      Shear::WordCollection.new.tap do |w|
         w.push_word('names', bounding_box: [[323, 27], [318, 112], [294, 110], [299, 26]])
         w.push_word('document', bounding_box: [[304, 377], [293, 501], [260, 499], [271, 374]],
                                 confidence: 1.0)
@@ -209,7 +209,7 @@ RSpec.describe Guillotine::Template do
 
     context "when 'unique' word is twice on the image" do
       let(:words) do
-        Guillotine::WordCollection.new.tap do |w|
+        Shear::WordCollection.new.tap do |w|
           w.push_word('names', bounding_box: [[323, 27], [318, 112], [294, 110], [299, 26]])
           w.push_word('document', bounding_box: [[304, 377], [293, 501], [260, 499], [271, 374]])
           w.push_word('John', bounding_box: [[270, 43], [267, 93], [234, 91], [237, 41]])
@@ -228,7 +228,7 @@ RSpec.describe Guillotine::Template do
 
     context "when 'discard' word is on the image" do
       let(:words) do
-        Guillotine::WordCollection.new.tap do |w|
+        Shear::WordCollection.new.tap do |w|
           w.push_word('Document', bounding_box: [[210, 27], [401, 114], [385, 150], [193, 63]])
           w.push_word('country', bounding_box: [[169, 122], [248, 159], [234, 189], [155, 152]])
           w.push_word('number', bounding_box: [[120, 211], [205, 246], [194, 272], [109, 237]])
@@ -254,7 +254,7 @@ RSpec.describe Guillotine::Template do
     end
 
     let(:back_words) do
-      Guillotine::WordCollection.new.tap do |w|
+      Shear::WordCollection.new.tap do |w|
         w.push_word('names', bounding_box: [[323, 27], [318, 112], [294, 110], [299, 26]])
         w.push_word('document', bounding_box: [[512, 120], [500, 200], [480, 200], [490, 120]])
         w.push_word('document', bounding_box: [[304, 377], [293, 501], [260, 499], [271, 374]])
@@ -287,7 +287,7 @@ RSpec.describe Guillotine::Template do
 
     context "when there are 4 or more fixtures present" do
       let(:words) do
-        Guillotine::WordCollection.new.tap do |w|
+        Shear::WordCollection.new.tap do |w|
           w.push_word('names', bounding_box: [[323, 27], [318, 112], [294, 110], [299, 26]])
           w.push_word('document', bounding_box: [[304, 377], [293, 501], [260, 499], [271, 374]])
           w.push_word('John', bounding_box: [[270, 43], [267, 93], [234, 91], [237, 41]])
@@ -305,7 +305,7 @@ RSpec.describe Guillotine::Template do
 
     context "when there are less than 4 fixtures present" do
       let(:words) do
-        Guillotine::WordCollection.new.tap do |w|
+        Shear::WordCollection.new.tap do |w|
           w.push_word('names', bounding_box: [[323, 27], [318, 112], [294, 110], [299, 26]])
           w.push_word('document', bounding_box: [[304, 377], [293, 501], [260, 499], [271, 374]])
           w.push_word('John', bounding_box: [[270, 43], [267, 93], [234, 91], [237, 41]])
